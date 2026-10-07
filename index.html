@@ -379,7 +379,7 @@ rows.forEach(function(row){
     var dt=Math.min(t-last,50);last=t;
     if(wait>0){wait-=dt;return}
     var max=row.scrollWidth-row.clientWidth;
-    pos+=dir*dt*0.035;                       /* about 35 px per second */
+    pos+=dir*dt*0.06;                        /* about 60 px per second */
     if(pos>=max){pos=max;dir=-1;wait=1500}else if(pos<=0){pos=0;dir=1;wait=1500}
     row.scrollLeft=pos}
   requestAnimationFrame(tick);
