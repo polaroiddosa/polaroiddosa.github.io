@@ -56,13 +56,13 @@ h2{font-size:clamp(26px,5.5vw,38px);line-height:1.15;margin-bottom:14px;color:va
 .sites a span{color:var(--pink)}
 .sites a:hover{border-color:var(--navy)}
 /* covers */
-.covers{display:flex;gap:14px;overflow-x:auto;padding:6px 20px 14px;margin:26px -20px 0;scroll-snap-type:x mandatory;scroll-padding-left:20px}
-.covers figure{flex:0 0 150px;scroll-snap-align:start}
+.covers{display:flex;gap:14px;overflow-x:auto;padding:6px 20px 14px;margin:26px -20px 0}
+.covers figure{flex:0 0 150px}
 .covers img{width:150px;height:auto;border-radius:10px;border:1px solid var(--line);display:block}
 .covers figcaption{font-size:13px;color:var(--mute);margin-top:8px;line-height:1.3}
 
-.strip{display:flex;gap:14px;overflow-x:auto;padding:6px 20px 16px;margin:26px -20px 0;scroll-snap-type:x mandatory;scroll-padding-left:20px}
-.ph{flex:0 0 auto;scroll-snap-align:start;background:none;border:0;padding:0;font:inherit;color:inherit;text-align:left;cursor:zoom-in;width:170px}
+.strip{display:flex;gap:14px;overflow-x:auto;padding:6px 20px 16px;margin:26px -20px 0}
+.ph{flex:0 0 auto;background:none;border:0;padding:0;font:inherit;color:inherit;text-align:left;cursor:zoom-in;width:170px}
 .ph img{display:block;width:170px;height:230px;object-fit:cover;object-position:top;border-radius:12px;border:1px solid var(--line);background:var(--bg2)}
 .ph span{display:block;font-size:13px;color:var(--mute);margin-top:8px;line-height:1.3}
 .ph:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:12px}
@@ -76,6 +76,13 @@ dialog::backdrop{background:rgba(0,20,40,.85)}
 dialog img{display:block;max-width:94vw;max-height:90vh;border-radius:12px}
 #lbx{position:absolute;top:8px;right:8px;width:44px;height:44px;border-radius:50%;border:0;background:#fff;color:var(--navy);font-size:26px;line-height:1;cursor:pointer}
 @media (min-width:640px){.strip,.films{margin:26px 0 0;padding:6px 0 16px}.ph,.ph img{width:200px}.ph img{height:270px}.film.p{width:240px}.film.l{width:420px}}
+
+.row{scrollbar-width:none;-webkit-overflow-scrolling:touch}.row::-webkit-scrollbar{display:none}
+.rowwrap{position:relative}
+.rowwrap .nav{position:absolute;top:calc(50% - 22px);width:44px;height:44px;border-radius:50%;border:0;background:#fff;color:var(--navy);font-size:22px;line-height:1;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.35);z-index:2;display:none;align-items:center;justify-content:center}
+.rowwrap .nav.prev{left:6px}.rowwrap .nav.next{right:6px}
+.rowwrap .nav[disabled]{opacity:0;pointer-events:none}
+@media (hover:hover){.rowwrap .nav{display:flex;opacity:0;transition:opacity .2s}.rowwrap:hover .nav:not([disabled]),.rowwrap .nav:focus-visible{opacity:1}.row{cursor:grab}.row.drag{cursor:grabbing;user-select:none}}
 /* contacts */
 .people{grid-template-columns:1fr}
 .person{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px}
@@ -338,6 +345,46 @@ document.getElementById("lbx").addEventListener("click",function(){lb.close()});
 lb.addEventListener("click",function(e){if(e.target===lb)lb.close()})}catch(e){}
 try{var io=new IntersectionObserver(function(es){es.forEach(function(e){var v=e.target;if(e.isIntersecting){v.muted=v.dataset.unmuted?false:true;var p=v.play();if(p&&p.catch)p.catch(function(){})}else{v.pause()}})},{threshold:.5});
 document.querySelectorAll(".films video").forEach(function(v){io.observe(v);v.addEventListener("volumechange",function(){if(!v.muted)v.dataset.unmuted="1"})})}catch(e){}
+
+try{(function(){
+var rows=[].slice.call(document.querySelectorAll(".strip,.covers,.films"));
+rows.forEach(function(row){
+  row.classList.add("row");
+  var auto=!row.classList.contains("films");
+  var wrap=document.createElement("div");wrap.className="rowwrap";row.parentNode.insertBefore(wrap,row);wrap.appendChild(row);
+  function mk(c,t,l){var b=document.createElement("button");b.type="button";b.className="nav "+c;b.setAttribute("aria-label",l);b.innerHTML=t;wrap.appendChild(b);return b}
+  var prev=mk("prev","&lsaquo;","Scroll left"),next=mk("next","&rsaquo;","Scroll right");
+  function edges(){prev.disabled=row.scrollLeft<4;next.disabled=row.scrollLeft+row.clientWidth>=row.scrollWidth-4}
+  function by(d){row.scrollBy({left:d*row.clientWidth*.8,behavior:"smooth"})}
+  prev.onclick=function(){hold(6000);by(-1)};next.onclick=function(){hold(6000);by(1)};
+  row.addEventListener("scroll",edges,{passive:true});edges();window.addEventListener("resize",edges);
+  /* mouse drag (touch already scrolls natively) */
+  var down=false,sx=0,sl=0,moved=false;
+  row.addEventListener("pointerdown",function(e){if(e.pointerType!=="mouse")return;down=true;moved=false;sx=e.clientX;sl=row.scrollLeft});
+  window.addEventListener("pointermove",function(e){if(!down)return;var dx=e.clientX-sx;if(Math.abs(dx)>5){moved=true;row.classList.add("drag")}if(moved)row.scrollLeft=sl-dx});
+  window.addEventListener("pointerup",function(){if(down){down=false;row.classList.remove("drag")}});
+  row.addEventListener("click",function(e){if(moved){e.preventDefault();e.stopPropagation();moved=false}},true);
+  /* gentle auto-drift, paused while touched, hovered, focused or off screen */
+  if(!auto)return;
+  var dir=1,pos=0,paused=false,visible=false,resume=0,wait=0;
+  function hold(ms){paused=true;clearTimeout(resume);if(ms)resume=setTimeout(function(){paused=false;pos=row.scrollLeft},ms)}
+  wrap.addEventListener("mouseenter",function(){hold(0)});
+  wrap.addEventListener("mouseleave",function(){clearTimeout(resume);resume=setTimeout(function(){paused=false;pos=row.scrollLeft},600)});
+  ["touchstart","pointerdown","wheel","focusin","keydown"].forEach(function(t){row.addEventListener(t,function(){hold(t==="focusin"||t==="keydown"?0:5000)},{passive:true})});
+  row.addEventListener("focusout",function(){hold(3000)});
+  new IntersectionObserver(function(es){visible=es[0].isIntersecting;if(visible)pos=row.scrollLeft}).observe(row);
+  var last=0;
+  function tick(t){requestAnimationFrame(tick);
+    if(!visible||paused||document.hidden||row.scrollWidth<=row.clientWidth+8){last=t;return}
+    var dt=Math.min(t-last,50);last=t;
+    if(wait>0){wait-=dt;return}
+    var max=row.scrollWidth-row.clientWidth;
+    pos+=dir*dt*0.035;                       /* about 35 px per second */
+    if(pos>=max){pos=max;dir=-1;wait=1500}else if(pos<=0){pos=0;dir=1;wait=1500}
+    row.scrollLeft=pos}
+  requestAnimationFrame(tick);
+});
+})()}catch(e){}
 </script>
 </body>
 </html>
