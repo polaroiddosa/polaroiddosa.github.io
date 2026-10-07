@@ -3,19 +3,291 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>LEAD-BI | Polaroid Dosa</title>
+<title>LEAD-BI Foundation</title>
+<meta name="description" content="LEAD Business Incubation Foundation helps young founders at LEAD College (Autonomous), Palakkad, turn ideas into businesses. See what we build, design and launch.">
+<meta name="theme-color" content="#00467C">
 <style>
-  html, body { height: 100%; margin: 0; }
-  body { display: flex; align-items: center; justify-content: center; background: #00467C; color: #fff;
-         font-family: "Google Sans", "Helvetica Neue", Arial, sans-serif; text-align: center; }
-  h1 { font-size: 1.6rem; margin: 0 0 .5rem; }
-  p { margin: 0; opacity: .85; }
+@font-face{font-family:"Google Sans";font-weight:400;font-display:swap;src:url(fonts/GoogleSans-400.ttf) format("truetype")}
+@font-face{font-family:"Google Sans";font-weight:700;font-display:swap;src:url(fonts/GoogleSans-700.ttf) format("truetype")}
+:root{--navy:#00467C;--navy-d:#00264A;--pink:#F00080;--blue:#00B0F0;--orange:#F09010;--green:#90C040;
+  --bg:#FFFFFF;--bg2:#F3F6FA;--ink:#0E1B2B;--mute:#4A5B6E;--line:#D8E1EB;--card:#FFFFFF}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#071827;--bg2:#0B2238;--ink:#EAF1F8;--mute:#A3B4C6;--line:#1B3550;--card:#0E2A44}}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font-family:"Google Sans",system-ui,sans-serif;font-weight:400;background:var(--bg);color:var(--ink);line-height:1.55;font-size:17px;-webkit-text-size-adjust:100%}
+h1,h2,h3,strong,b{font-weight:700}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+section{padding:56px 0}
+.alt{background:var(--bg2)}
+.eyebrow{display:inline-block;font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--pink);margin-bottom:10px}
+h2{font-size:clamp(26px,5.5vw,38px);line-height:1.15;margin-bottom:14px;color:var(--navy)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) h2{color:#fff}}
+.lead{color:var(--mute);max-width:60ch;font-size:18px}
+/* hero */
+.hero{background:linear-gradient(160deg,var(--navy) 0%,var(--navy-d) 100%);color:#fff;padding:28px 0 64px;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;left:0;right:0;bottom:0;height:6px;background:linear-gradient(90deg,var(--pink) 0 25%,var(--blue) 25% 50%,var(--orange) 50% 75%,var(--green) 75%)}
+.logos{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:44px}
+.logos .chip{background:#fff;border-radius:12px;padding:8px 14px;display:flex;align-items:center}
+.logos img{height:38px;width:auto;display:block}
+.hero h1{font-size:clamp(34px,9vw,64px);line-height:1.05;max-width:14ch;margin-bottom:18px}
+.hero p{font-size:19px;max-width:44ch;color:#D5E4F2}
+.btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.btn{display:inline-flex;align-items:center;min-height:48px;padding:0 22px;border-radius:999px;font-weight:700;text-decoration:none;font-size:16px}
+.btn.primary{background:var(--pink);color:#fff}
+.btn.ghost{border:2px solid #fff;color:#fff}
+.btn:focus-visible,a:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+/* tiles */
+.grid{display:grid;gap:14px;margin-top:28px}
+.tiles{grid-template-columns:1fr}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;border-top:5px solid var(--c)}
+.tile h3{font-size:19px;margin-bottom:6px}
+.tile p{color:var(--mute);font-size:16px}
+/* work */
+.work{display:grid;gap:22px;margin-top:30px}
+.demo{background:var(--card);border:1px solid var(--line);border-radius:22px;overflow:hidden}
+.demo video{display:block;width:100%;height:auto;background:var(--navy-d)}
+.demo .cap{padding:16px 20px 20px}
+.demo h3{font-size:20px}
+.demo p{color:var(--mute);font-size:15.5px;margin-top:2px}
+.note{color:var(--mute);font-size:14.5px;margin-top:16px}
+.sites{display:grid;gap:10px;margin-top:22px;grid-template-columns:1fr}
+.sites a{display:flex;justify-content:space-between;align-items:center;min-height:52px;padding:0 18px;border-radius:14px;border:1px solid var(--line);background:var(--card);text-decoration:none;font-weight:700}
+.sites a span{color:var(--pink)}
+.sites a:hover{border-color:var(--navy)}
+/* covers */
+.covers{display:flex;gap:14px;overflow-x:auto;padding:6px 20px 14px;margin:26px -20px 0;scroll-snap-type:x mandatory;scroll-padding-left:20px}
+.covers figure{flex:0 0 150px;scroll-snap-align:start}
+.covers img{width:150px;height:auto;border-radius:10px;border:1px solid var(--line);display:block}
+.covers figcaption{font-size:13px;color:var(--mute);margin-top:8px;line-height:1.3}
+
+.strip{display:flex;gap:14px;overflow-x:auto;padding:6px 20px 16px;margin:26px -20px 0;scroll-snap-type:x mandatory;scroll-padding-left:20px}
+.ph{flex:0 0 auto;scroll-snap-align:start;background:none;border:0;padding:0;font:inherit;color:inherit;text-align:left;cursor:zoom-in;width:170px}
+.ph img{display:block;width:170px;height:230px;object-fit:cover;object-position:top;border-radius:12px;border:1px solid var(--line);background:var(--bg2)}
+.ph span{display:block;font-size:13px;color:var(--mute);margin-top:8px;line-height:1.3}
+.ph:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:12px}
+.films{display:flex;gap:16px;overflow-x:auto;padding:6px 20px 16px;margin:26px -20px 0;scroll-snap-type:x mandatory;scroll-padding-left:20px}
+.film{flex:0 0 auto;scroll-snap-align:start}
+.film.p{width:210px}.film.l{width:340px}
+.film video{display:block;width:100%;height:auto;border-radius:14px;background:var(--navy-d)}
+.film figcaption{font-size:14px;color:var(--mute);margin-top:8px}
+dialog{border:0;border-radius:16px;padding:0;background:transparent;max-width:94vw;max-height:94vh}
+dialog::backdrop{background:rgba(0,20,40,.85)}
+dialog img{display:block;max-width:94vw;max-height:90vh;border-radius:12px}
+#lbx{position:absolute;top:8px;right:8px;width:44px;height:44px;border-radius:50%;border:0;background:#fff;color:var(--navy);font-size:26px;line-height:1;cursor:pointer}
+@media (min-width:640px){.strip,.films{margin:26px 0 0;padding:6px 0 16px}.ph,.ph img{width:200px}.ph img{height:270px}.film.p{width:240px}.film.l{width:420px}}
+/* contacts */
+.people{grid-template-columns:1fr}
+.person{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px}
+.person h3{font-size:19px}
+.person .role{color:var(--mute);font-size:15px;margin:2px 0 12px}
+.person a{display:block;text-decoration:none;font-weight:700;color:var(--navy);padding:6px 0;min-height:44px;line-height:32px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .person a{color:var(--blue)}}
+footer{background:var(--navy-d);color:#C5D6E8;padding:34px 0 40px;font-size:15px}
+footer .by{margin-top:14px;font-size:13.5px;color:#8FA9C2}
+footer a{color:#fff}
+@media (min-width:640px){.tiles{grid-template-columns:repeat(2,1fr)}.sites{grid-template-columns:repeat(2,1fr)}.people{grid-template-columns:repeat(3,1fr)}.covers{margin:26px 0 0;padding:6px 0 14px}.work{grid-template-columns:repeat(2,1fr)}.demo.wide{grid-column:span 2}}
+@media (min-width:900px){section{padding:84px 0}.tiles{grid-template-columns:repeat(4,1fr)}.sites{grid-template-columns:repeat(3,1fr)}.hero{padding:36px 0 96px}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
-  <main>
-    <h1>LEAD-BI | Polaroid Dosa</h1>
-    <p>Coming soon</p>
-  </main>
+<header class="hero">
+  <div class="wrap">
+    <div class="logos">
+      <span class="chip"><img src="img/logo_lead_bi.png" alt="LEAD-BI Foundation"></span>
+      <span class="chip"><img src="img/logo_lead_college.png" alt="LEAD College (Autonomous)"></span>
+    </div>
+    <h1>What we build, design and launch</h1>
+    <p>LEAD Business Incubation Foundation helps young founders at LEAD College (Autonomous), Palakkad, turn ideas into businesses.</p>
+    <div class="btns">
+      <a class="btn primary" href="#work">See live work</a>
+      <a class="btn ghost" href="#contact">Contact us</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<section id="about">
+  <div class="wrap">
+    <span class="eyebrow">Who we are</span>
+    <h2>Born at LEAD-BI</h2>
+    <p class="lead">LEAD-BI Foundation supports young founders at LEAD College (Autonomous). Polaroid Dosa is the creative and technology team incubated here. Together we have built packaging, brands, websites, apps and films for businesses across Kerala.</p>
+  </div>
+</section>
+
+<section id="build" class="alt">
+  <div class="wrap">
+    <span class="eyebrow">What we build</span>
+    <h2>Four things, done end to end</h2>
+    <div class="grid tiles">
+      <div class="tile" style="--c:var(--pink)"><h3>Packaging</h3><p>Pouches, boxes and kits, ready for the printer.</p></div>
+      <div class="tile" style="--c:var(--blue)"><h3>Brand and Design</h3><p>Logos, identities, posters and campaigns.</p></div>
+      <div class="tile" style="--c:var(--orange)"><h3>Websites and Apps</h3><p>Sites and software that people use every day.</p></div>
+      <div class="tile" style="--c:var(--green)"><h3>Media</h3><p>Films, interviews and photography.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <span class="eyebrow">Live work</span>
+    <h2>Software built for real work</h2>
+    <p class="lead">Real screens from the products we build, running with sample data.</p>
+    <div class="work">
+      <div class="demo">
+        <video src="media/rentbook.mp4" autoplay muted loop playsinline preload="metadata" aria-label="RentBook app screens: dashboard, tenants, tenant detail and payments"></video>
+        <div class="cap"><h3>RentBook</h3><p>Rent and property management.</p></div>
+      </div>
+      <div class="demo">
+        <video src="media/rosario.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Rosario ERP screens: owner dashboard, records and reports"></video>
+        <div class="cap"><h3>Rosario</h3><p>Fleet management ERP.</p></div>
+      </div>
+      <div class="demo wide">
+        <video src="media/dishgrid.mp4" autoplay muted loop playsinline preload="metadata" aria-label="DishGrid screens: counter, menu and reports"></video>
+        <div class="cap"><h3>DishGrid</h3><p>Restaurant billing.</p></div>
+      </div>
+    </div>
+    <p class="note">Screens show sample data, not real customer records.</p>
+  </div>
+</section>
+
+<section id="sites" class="alt">
+  <div class="wrap">
+    <span class="eyebrow">Websites</span>
+    <h2>Live websites you can visit today</h2>
+    <div class="work" style="margin-top:26px">
+      <div class="demo wide">
+        <video src="media/sites.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Seven live websites scrolling past in a laptop frame"></video>
+      </div>
+    </div>
+    <div class="sites">
+      <a href="https://portfolio.polaroiddosa.com" rel="noopener">portfolio.polaroiddosa.com <span aria-hidden="true">&rarr;</span></a>
+      <a href="https://azmatqatar.com" rel="noopener">azmatqatar.com <span aria-hidden="true">&rarr;</span></a>
+      <a href="https://ecototex.com" rel="noopener">ecototex.com <span aria-hidden="true">&rarr;</span></a>
+      <a href="https://feastale.com" rel="noopener">feastale.com <span aria-hidden="true">&rarr;</span></a>
+      <a href="https://coonfresh.com" rel="noopener">coonfresh.com <span aria-hidden="true">&rarr;</span></a>
+      <a href="https://taccommunity.online" rel="noopener">taccommunity.online <span aria-hidden="true">&rarr;</span></a>
+      <a href="https://ilead.lead.ac.in" rel="noopener">ilead.lead.ac.in <span aria-hidden="true">&rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+<section id="packaging">
+  <div class="wrap">
+    <span class="eyebrow">Packaging</span>
+    <h2>Packaging that is ready to print</h2>
+    <p class="lead">Pack artwork for the K-INAM food range.</p>
+    <div class="strip">
+<button class="ph" type="button" data-src="img/posters/packaging-01.webp" data-alt="K-INAM product range"><img src="img/posters/packaging-01.webp" width="640" height="360" alt="K-INAM product range" loading="lazy"><span>K-INAM product range</span></button>
+<button class="ph" type="button" data-src="img/posters/packaging-02.webp" data-alt="Purple sweet potato chips"><img src="img/posters/packaging-02.webp" width="640" height="795" alt="Purple sweet potato chips" loading="lazy"><span>Purple sweet potato chips</span></button>
+<button class="ph" type="button" data-src="img/posters/packaging-03.webp" data-alt="Tutti Frutti"><img src="img/posters/packaging-03.webp" width="529" height="900" alt="Tutti Frutti" loading="lazy"><span>Tutti Frutti</span></button>
+<button class="ph" type="button" data-src="img/posters/packaging-04.webp" data-alt="Millet malt"><img src="img/posters/packaging-04.webp" width="553" height="900" alt="Millet malt" loading="lazy"><span>Millet malt</span></button>
+<button class="ph" type="button" data-src="img/posters/packaging-05.webp" data-alt="Banana pasta"><img src="img/posters/packaging-05.webp" width="514" height="900" alt="Banana pasta" loading="lazy"><span>Banana pasta</span></button>
+<button class="ph" type="button" data-src="img/posters/packaging-06.webp" data-alt="Millet muesli"><img src="img/posters/packaging-06.webp" width="640" height="478" alt="Millet muesli" loading="lazy"><span>Millet muesli</span></button>
+<button class="ph" type="button" data-src="img/posters/packaging-07.webp" data-alt="Mixed fruit bar"><img src="img/posters/packaging-07.webp" width="640" height="478" alt="Mixed fruit bar" loading="lazy"><span>Mixed fruit bar</span></button>
+<button class="ph" type="button" data-src="img/posters/packaging-08.webp" data-alt="Turmeric powder"><img src="img/posters/packaging-08.webp" width="514" height="900" alt="Turmeric powder" loading="lazy"><span>Turmeric powder</span></button>
+<button class="ph" type="button" data-src="img/posters/packaging-09.webp" data-alt="Coffee cubes"><img src="img/posters/packaging-09.webp" width="640" height="478" alt="Coffee cubes" loading="lazy"><span>Coffee cubes</span></button>
+<button class="ph" type="button" data-src="img/posters/packaging-10.webp" data-alt="Arrowroot powder"><img src="img/posters/packaging-10.webp" width="640" height="478" alt="Arrowroot powder" loading="lazy"><span>Arrowroot powder</span></button>
+    </div>
+  </div>
+</section>
+
+<section id="events" class="alt">
+  <div class="wrap">
+    <span class="eyebrow">Events and campaigns</span>
+    <h2>Posters for the stage, the screen and the feed</h2>
+    <p class="lead">Creatives for LEAD-BI and LEAD College events: the National Entrepreneurship Conclave, Kerala Startup Carnival and more.</p>
+    <div class="strip">
+<button class="ph" type="button" data-src="img/posters/events-01.webp" data-alt="LEAD-BI MBA Entrepreneurship"><img src="img/posters/events-01.webp" width="640" height="853" alt="LEAD-BI MBA Entrepreneurship" loading="lazy"><span>LEAD-BI MBA Entrepreneurship</span></button>
+<button class="ph" type="button" data-src="img/posters/events-02.webp" data-alt="National Entrepreneurship Conclave 2026"><img src="img/posters/events-02.webp" width="640" height="777" alt="National Entrepreneurship Conclave 2026" loading="lazy"><span>National Entrepreneurship Conclave 2026</span></button>
+<button class="ph" type="button" data-src="img/posters/events-03.webp" data-alt="NEC 2026 chief guest"><img src="img/posters/events-03.webp" width="640" height="777" alt="NEC 2026 chief guest" loading="lazy"><span>NEC 2026 chief guest</span></button>
+<button class="ph" type="button" data-src="img/posters/events-04.webp" data-alt="NEC 2026 teaser"><img src="img/posters/events-04.webp" width="640" height="640" alt="NEC 2026 teaser" loading="lazy"><span>NEC 2026 teaser</span></button>
+<button class="ph" type="button" data-src="img/posters/events-05.webp" data-alt="National Startup Day"><img src="img/posters/events-05.webp" width="640" height="777" alt="National Startup Day" loading="lazy"><span>National Startup Day</span></button>
+<button class="ph" type="button" data-src="img/posters/events-06.webp" data-alt="Kerala Startup Carnival: pitch"><img src="img/posters/events-06.webp" width="640" height="853" alt="Kerala Startup Carnival: pitch" loading="lazy"><span>Kerala Startup Carnival: pitch</span></button>
+<button class="ph" type="button" data-src="img/posters/events-07.webp" data-alt="Kerala Startup Carnival: showcase"><img src="img/posters/events-07.webp" width="640" height="853" alt="Kerala Startup Carnival: showcase" loading="lazy"><span>Kerala Startup Carnival: showcase</span></button>
+<button class="ph" type="button" data-src="img/posters/events-08.webp" data-alt="Kerala Startup Carnival: speakers"><img src="img/posters/events-08.webp" width="640" height="853" alt="Kerala Startup Carnival: speakers" loading="lazy"><span>Kerala Startup Carnival: speakers</span></button>
+<button class="ph" type="button" data-src="img/posters/events-09.webp" data-alt="Kerala Startup Carnival teaser"><img src="img/posters/events-09.webp" width="640" height="853" alt="Kerala Startup Carnival teaser" loading="lazy"><span>Kerala Startup Carnival teaser</span></button>
+<button class="ph" type="button" data-src="img/posters/events-10.webp" data-alt="NIPM HR Conclave"><img src="img/posters/events-10.webp" width="636" height="900" alt="NIPM HR Conclave" loading="lazy"><span>NIPM HR Conclave</span></button>
+    </div>
+  </div>
+</section>
+
+<section id="brands">
+  <div class="wrap">
+    <span class="eyebrow">Brand and Design</span>
+    <h2>Identities and campaigns that get noticed</h2>
+    <div class="strip">
+<button class="ph" type="button" data-src="img/posters/brands-01.webp" data-alt="Feastale"><img src="img/posters/brands-01.webp" width="636" height="900" alt="Feastale" loading="lazy"><span>Feastale</span></button>
+<button class="ph" type="button" data-src="img/posters/brands-02.webp" data-alt="Feastale gifting"><img src="img/posters/brands-02.webp" width="640" height="853" alt="Feastale gifting" loading="lazy"><span>Feastale gifting</span></button>
+<button class="ph" type="button" data-src="img/posters/brands-03.webp" data-alt="Happioca"><img src="img/posters/brands-03.webp" width="640" height="853" alt="Happioca" loading="lazy"><span>Happioca</span></button>
+<button class="ph" type="button" data-src="img/posters/brands-04.webp" data-alt="Happioca campaign"><img src="img/posters/brands-04.webp" width="640" height="853" alt="Happioca campaign" loading="lazy"><span>Happioca campaign</span></button>
+<button class="ph" type="button" data-src="img/posters/brands-05.webp" data-alt="Livart Salon"><img src="img/posters/brands-05.webp" width="640" height="853" alt="Livart Salon" loading="lazy"><span>Livart Salon</span></button>
+<button class="ph" type="button" data-src="img/posters/brands-06.webp" data-alt="Taste of Malabar"><img src="img/posters/brands-06.webp" width="640" height="800" alt="Taste of Malabar" loading="lazy"><span>Taste of Malabar</span></button>
+<button class="ph" type="button" data-src="img/posters/brands-07.webp" data-alt="Dhoniverse festival"><img src="img/posters/brands-07.webp" width="636" height="900" alt="Dhoniverse festival" loading="lazy"><span>Dhoniverse festival</span></button>
+<button class="ph" type="button" data-src="img/posters/brands-08.webp" data-alt="Ahead launch teaser"><img src="img/posters/brands-08.webp" width="640" height="800" alt="Ahead launch teaser" loading="lazy"><span>Ahead launch teaser</span></button>
+    </div>
+  </div>
+</section>
+
+<section id="films" class="alt">
+  <div class="wrap">
+    <span class="eyebrow">Media</span>
+    <h2>Films that tell the story</h2>
+    <p class="lead">Short excerpts. Tap play to watch.</p>
+    <div class="films">
+<figure class="film p"><video controls preload="none" playsinline poster="media/films/lead-college-campus-tour.jpg" src="media/films/lead-college-campus-tour.mp4" aria-label="LEAD College campus tour"></video><figcaption>LEAD College campus tour</figcaption></figure>
+<figure class="film p"><video controls preload="none" playsinline poster="media/films/lead-mba-campaign.jpg" src="media/films/lead-mba-campaign.mp4" aria-label="LEAD MBA campaign"></video><figcaption>LEAD MBA campaign</figcaption></figure>
+<figure class="film p"><video controls preload="none" playsinline poster="media/films/nec-startup-interview.jpg" src="media/films/nec-startup-interview.mp4" aria-label="NEC startup interview"></video><figcaption>NEC startup interview</figcaption></figure>
+<figure class="film p"><video controls preload="none" playsinline poster="media/films/lead-building-exterior.jpg" src="media/films/lead-building-exterior.mp4" aria-label="LEAD campus"></video><figcaption>LEAD campus</figcaption></figure>
+<figure class="film l"><video controls preload="none" playsinline poster="media/films/keralastartupcarnival-pitch-skit.jpg" src="media/films/keralastartupcarnival-pitch-skit.mp4" aria-label="Kerala Startup Carnival skit"></video><figcaption>Kerala Startup Carnival skit</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<dialog id="lb" aria-label="Poster viewer"><button type="button" id="lbx" aria-label="Close">&times;</button><img id="lbi" alt=""></dialog>
+
+<section id="print">
+  <div class="wrap">
+    <span class="eyebrow">Print and editorial</span>
+    <h2>Brochures, covers and event print</h2>
+    <div class="covers">
+      <figure><img src="img/LEAD-Breaking-Boundaries-OBT-Brochure.jpg" alt="LEAD Breaking Boundaries brochure cover" loading="lazy"><figcaption>LEAD Breaking Boundaries</figcaption></figure>
+      <figure><img src="img/LEAD-MBA-Entrepreneurship-Brochure.jpg" alt="LEAD MBA Entrepreneurship brochure cover" loading="lazy"><figcaption>LEAD MBA Entrepreneurship</figcaption></figure>
+      <figure><img src="img/Dhoniverse-Fest-Brochure.jpg" alt="Dhoniverse festival brochure cover" loading="lazy"><figcaption>Dhoniverse festival</figcaption></figure>
+      <figure><img src="img/NIPM-HR-Conclave-Brochure.jpg" alt="NIPM HR Conclave brochure cover" loading="lazy"><figcaption>NIPM HR Conclave</figcaption></figure>
+      <figure><img src="img/Happioca-Menu-Brochure.jpg" alt="Happioca menu brochure cover" loading="lazy"><figcaption>Happioca menu</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="alt">
+  <div class="wrap">
+    <span class="eyebrow">Say hello</span>
+    <h2>Let&rsquo;s build something</h2>
+    <div class="grid people">
+      <div class="person"><h3>Dr. Thomas George K.</h3><p class="role">Chairman, LEAD Group of Institutions</p><a href="tel:+919447146479">+91 94471 46479</a><a href="mailto:thomas@lead.ac.in">thomas@lead.ac.in</a></div>
+      <div class="person"><h3>Dr P Rajan</h3><p class="role">HoD, MBA Entrepreneurship, LEAD College (Autonomous)</p><a href="tel:+919447533363">+91 94475 33363</a><a href="mailto:rajan@lead.ac.in">rajan@lead.ac.in</a></div>
+      <div class="person"><h3>Dr. Megha P M</h3><p class="role">Incubation Head, LEAD-BI Foundation</p><a href="tel:+919946999584">+91 99469 99584</a><a href="mailto:leadbi@lead.ac.in">leadbi@lead.ac.in</a></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><strong>LEAD College (Autonomous)</strong><br>Dhoni P.O., Palakkad, Kerala 678009<br><a href="https://www.lead.ac.in" rel="noopener">www.lead.ac.in</a></p>
+    <p class="by">Delivered with <a href="https://portfolio.polaroiddosa.com" rel="noopener">Polaroid Dosa</a>.</p>
+  </div>
+</footer>
+<script>
+try{if(matchMedia("(prefers-reduced-motion: reduce)").matches)document.querySelectorAll("video").forEach(function(v){v.removeAttribute("autoplay");v.pause();v.controls=true})}catch(e){}
+
+try{var lb=document.getElementById("lb"),lbi=document.getElementById("lbi");
+document.querySelectorAll(".ph").forEach(function(b){b.addEventListener("click",function(){lbi.src=b.dataset.src;lbi.alt=b.dataset.alt;lb.showModal()})});
+document.getElementById("lbx").addEventListener("click",function(){lb.close()});
+lb.addEventListener("click",function(e){if(e.target===lb)lb.close()})}catch(e){}
+document.querySelectorAll(".films video").forEach(function(v){v.addEventListener("play",function(){document.querySelectorAll(".films video").forEach(function(o){if(o!==v)o.pause()})})});
+</script>
 </body>
 </html>
