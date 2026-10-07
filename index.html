@@ -280,17 +280,17 @@ footer a{color:#fff}
   <div class="wrap">
     <span class="eyebrow">Media</span>
     <h2>Films that tell the story</h2>
-    <p class="lead">Short excerpts. Tap play to watch.</p>
+    <p class="lead">Short excerpts. Tap a film to turn the sound on.</p>
     <div class="films">
-<figure class="film p"><video controls preload="none" playsinline poster="media/films/lead-college-campus-tour.jpg" src="media/films/lead-college-campus-tour.mp4" aria-label="LEAD College campus tour"></video><figcaption>LEAD College campus tour</figcaption></figure>
-<figure class="film p"><video controls preload="none" playsinline poster="media/films/lead-mba-campaign.jpg" src="media/films/lead-mba-campaign.mp4" aria-label="LEAD MBA campaign"></video><figcaption>LEAD MBA campaign</figcaption></figure>
-<figure class="film p"><video controls preload="none" playsinline poster="media/films/nec-startup-interview.jpg" src="media/films/nec-startup-interview.mp4" aria-label="NEC startup interview"></video><figcaption>NEC startup interview</figcaption></figure>
-<figure class="film p"><video controls preload="none" playsinline poster="media/films/lead-building-exterior.jpg" src="media/films/lead-building-exterior.mp4" aria-label="LEAD campus"></video><figcaption>LEAD campus</figcaption></figure>
-<figure class="film l"><video controls preload="none" playsinline poster="media/films/keralastartupcarnival-pitch-skit.jpg" src="media/films/keralastartupcarnival-pitch-skit.mp4" aria-label="Kerala Startup Carnival skit"></video><figcaption>Kerala Startup Carnival skit</figcaption></figure>
-<figure class="film p"><video controls preload="none" playsinline poster="media/films/ksc-testimonial-final.jpg" src="media/films/ksc-testimonial-final.mp4" aria-label="Kerala Startup Carnival testimonial"></video><figcaption>Kerala Startup Carnival testimonial</figcaption></figure>
-<figure class="film p"><video controls preload="none" playsinline poster="media/films/influencer-video-final.jpg" src="media/films/influencer-video-final.mp4" aria-label="Influencer video"></video><figcaption>Influencer video</figcaption></figure>
-<figure class="film p"><video controls preload="none" playsinline poster="media/films/corporate-interview-final.jpg" src="media/films/corporate-interview-final.mp4" aria-label="Corporate interview"></video><figcaption>Corporate interview</figcaption></figure>
-<figure class="film p"><video controls preload="none" playsinline poster="media/films/narrative-ad-short.jpg" src="media/films/narrative-ad-short.mp4" aria-label="Narrative ad"></video><figcaption>Narrative ad</figcaption></figure>
+<figure class="film p"><video controls muted loop playsinline preload="metadata" poster="media/films/lead-college-campus-tour.jpg" src="media/films/lead-college-campus-tour.mp4" aria-label="LEAD College campus tour"></video><figcaption>LEAD College campus tour</figcaption></figure>
+<figure class="film p"><video controls muted loop playsinline preload="metadata" poster="media/films/lead-mba-campaign.jpg" src="media/films/lead-mba-campaign.mp4" aria-label="LEAD MBA campaign"></video><figcaption>LEAD MBA campaign</figcaption></figure>
+<figure class="film p"><video controls muted loop playsinline preload="metadata" poster="media/films/nec-startup-interview.jpg" src="media/films/nec-startup-interview.mp4" aria-label="NEC startup interview"></video><figcaption>NEC startup interview</figcaption></figure>
+<figure class="film p"><video controls muted loop playsinline preload="metadata" poster="media/films/lead-building-exterior.jpg" src="media/films/lead-building-exterior.mp4" aria-label="LEAD campus"></video><figcaption>LEAD campus</figcaption></figure>
+<figure class="film l"><video controls muted loop playsinline preload="metadata" poster="media/films/keralastartupcarnival-pitch-skit.jpg" src="media/films/keralastartupcarnival-pitch-skit.mp4" aria-label="Kerala Startup Carnival skit"></video><figcaption>Kerala Startup Carnival skit</figcaption></figure>
+<figure class="film p"><video controls muted loop playsinline preload="metadata" poster="media/films/ksc-testimonial-final.jpg" src="media/films/ksc-testimonial-final.mp4" aria-label="Kerala Startup Carnival testimonial"></video><figcaption>Kerala Startup Carnival testimonial</figcaption></figure>
+<figure class="film p"><video controls muted loop playsinline preload="metadata" poster="media/films/influencer-video-final.jpg" src="media/films/influencer-video-final.mp4" aria-label="Influencer video"></video><figcaption>Influencer video</figcaption></figure>
+<figure class="film p"><video controls muted loop playsinline preload="metadata" poster="media/films/corporate-interview-final.jpg" src="media/films/corporate-interview-final.mp4" aria-label="Corporate interview"></video><figcaption>Corporate interview</figcaption></figure>
+<figure class="film p"><video controls muted loop playsinline preload="metadata" poster="media/films/narrative-ad-short.jpg" src="media/films/narrative-ad-short.mp4" aria-label="Narrative ad"></video><figcaption>Narrative ad</figcaption></figure>
     </div>
   </div>
 </section>
@@ -331,13 +331,13 @@ footer a{color:#fff}
   </div>
 </footer>
 <script>
-try{if(matchMedia("(prefers-reduced-motion: reduce)").matches)document.querySelectorAll("video").forEach(function(v){v.removeAttribute("autoplay");v.pause();v.controls=true})}catch(e){}
 
 try{var lb=document.getElementById("lb"),lbi=document.getElementById("lbi");
 document.querySelectorAll(".ph").forEach(function(b){b.addEventListener("click",function(){lbi.src=b.dataset.src;lbi.alt=b.dataset.alt;lb.showModal()})});
 document.getElementById("lbx").addEventListener("click",function(){lb.close()});
 lb.addEventListener("click",function(e){if(e.target===lb)lb.close()})}catch(e){}
-document.querySelectorAll(".films video").forEach(function(v){v.addEventListener("play",function(){document.querySelectorAll(".films video").forEach(function(o){if(o!==v)o.pause()})})});
+try{var io=new IntersectionObserver(function(es){es.forEach(function(e){var v=e.target;if(e.isIntersecting){v.muted=v.dataset.unmuted?false:true;var p=v.play();if(p&&p.catch)p.catch(function(){})}else{v.pause()}})},{threshold:.5});
+document.querySelectorAll(".films video").forEach(function(v){io.observe(v);v.addEventListener("volumechange",function(){if(!v.muted)v.dataset.unmuted="1"})})}catch(e){}
 </script>
 </body>
 </html>
